@@ -5,7 +5,7 @@
 ## Login   <voinne_c@epitech.net>
 ## 
 ## Started on  Mon Mar 23 10:48:19 2015 Cédric Voinnet
-## Last update Mon Mar 23 11:05:58 2015 Cédric Voinnet
+## Last update Thu Mar 26 19:06:45 2015 Cédric Voinnet
 ##
 
 CC	=	g++
@@ -14,15 +14,23 @@ RM	=	rm -f
 
 CFLAGS	=	-fpic -W -Wall -Werror -Wextra
 
+INC	=	-Iincludes/core/ \
+		-Iincludes/gtk/ \
+		-Iincludes/sfml/ \
+		-Iincludes/lib_bernulf/
+
 NAME	=	nibbler
 
-NAME_L1	=	lib_nibbler_.so
+NAME_L1	=	lib_nibbler_gtk.so
 
-NAME_L2	=	lib_nibbler_.so
+NAME_L2	=	lib_nibbler_sfml.so
 
-NAME_L3	=	lib_nibbler_.so
+NAME_L3	=	lib_nibbler_bernulf.so
 
-SRC	=	
+SRC	=	src/core/main.cpp \
+		src/core/Core.cpp \
+		src/core/Snake.cpp \
+		src/core/Error.cpp
 
 SRC_L1	=	
 
@@ -38,10 +46,10 @@ OBJ_L2	=	$(SRC_L2:.cpp=.o)
 
 OBJ_L3	=	$(SRC_L3:.cpp=.o)
 
-all:		$(NAME) $(NAME_L1) $(NAME_L2) $(NAME_L3)
+all:		$(NAME) #$(NAME_L1) $(NAME_L2) $(NAME_L3)
 
 $(NAME):	$(OBJ)
-		$(CC) $(OBJ) -o $(NAME)
+		$(CC) $(OBJ) -o $(NAME) -ldl
 
 $(NAME_L1):	$(OBJ_L1)
 		$(CC) $(OBJ_L1) -shared -o $(NAME_L1)
@@ -53,4 +61,13 @@ $(NAME_L3):	$(OBJ_L3)
 		$(CC) $(OBJ_L3) -shared -o $(NAME_L3)
 
 %.o:		%.cpp
-		$(CC) $(CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+clean:
+		$(RM) $(OBJ) $(OBJ_L1) $(OBJ_L2) $(OBJ_L3)
+
+fclean:		clean
+		$(RM) $(NAME) $(NAME_L1) $(NAME_L2) $(NAME_L3)
+
+re:		fclean all
+
+.PHONY:		re fclean all clean
