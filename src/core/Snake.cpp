@@ -17,6 +17,16 @@ Snake::Snake(int x, int y)
   _dir = NORTH;
 }
 
+t_direction	getDirection()
+{
+  return (_dir);
+}
+
+std::vector<std::pair<int, int> >	getBody() const
+{
+  return (_body);
+}
+
 void			Snake::goForward()
 {
   std::pair<int, int>	tmp = _body[0];
@@ -41,3 +51,4 @@ void			Snake::goForward()
       break;
     }
 }
+

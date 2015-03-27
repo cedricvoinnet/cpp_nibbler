@@ -16,7 +16,7 @@ typedef enum	e_direction
 class					Snake
 {
  private:
-  bool					alive;
+  bool					_alive;
   std::vector<std::pair<int ,int> >	_body;
   t_direction				_dir;
  public:
