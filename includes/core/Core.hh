@@ -16,6 +16,8 @@ public:
   ~Core();
 public:
   void		gameLoop();
+private:
+  bool		isAlive();
 };
 
 #endif	// !CORE_HH_

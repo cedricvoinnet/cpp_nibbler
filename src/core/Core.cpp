@@ -14,9 +14,15 @@ Core::~Core()
   dlclose(_lib);
 }
 
+bool	Core::isAlive()
+{
+  return (true);
+}
+
 void	Core::gameLoop()
 {
-  _snake.goForward();
-  _snake.goForward();
-  _snake.goForward();
+  while (isAlive())
+    {
+      _snake.goForward();
+    }
 }

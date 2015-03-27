@@ -4,7 +4,6 @@
 
 Snake::Snake(int x, int y)
 {
-  _alive = true;
   _body.push_back(std::make_pair(x / 2, y / 2 - 2));
   _body.push_back(std::make_pair(x / 2, y / 2 - 1));
   _body.push_back(std::make_pair(x / 2, y / 2));
@@ -17,12 +16,12 @@ Snake::Snake(int x, int y)
   _dir = NORTH;
 }
 
-t_direction	getDirection()
+t_direction	Snake::getDirection() const
 {
   return (_dir);
 }
 
-std::vector<std::pair<int, int> >	getBody() const
+std::vector<std::pair<int, int> >	Snake::getBody() const
 {
   return (_body);
 }
@@ -51,4 +50,3 @@ void			Snake::goForward()
       break;
     }
 }
-
