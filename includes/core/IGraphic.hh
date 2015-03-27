@@ -10,14 +10,14 @@ typedef enum	e_move{
 
 class	IGraphic
 {
-private:
+public:
   virtual ~IGraphic() {};
 public:
-  virtual t_move	getEvent() const = 0;
+  virtual t_move	getEvent() = 0;
   virtual void		display() = 0;
 };
 
-typedef IGraphic *(*graphCreat)();
+typedef IGraphic *(*graphCreate)(int, int);
 typedef void (*graphDelete)(IGraphic *);
 
 #endif	// !IGRAPHIC_HH_

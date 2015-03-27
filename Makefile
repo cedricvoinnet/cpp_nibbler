@@ -5,7 +5,7 @@
 ## Login   <voinne_c@epitech.net>
 ## 
 ## Started on  Mon Mar 23 10:48:19 2015 Cédric Voinnet
-## Last update Thu Mar 26 19:06:45 2015 Cédric Voinnet
+## Last update Fri Mar 27 16:31:18 2015 Cédric Voinnet
 ##
 
 CC	=	g++
@@ -34,7 +34,7 @@ SRC	=	src/core/main.cpp \
 
 SRC_L1	=	
 
-SRC_L2	=	
+SRC_L2	=	src/sfml/sfml.cpp
 
 SRC_L3	=	
 
@@ -46,7 +46,7 @@ OBJ_L2	=	$(SRC_L2:.cpp=.o)
 
 OBJ_L3	=	$(SRC_L3:.cpp=.o)
 
-all:		$(NAME) #$(NAME_L1) $(NAME_L2) $(NAME_L3)
+all:		$(NAME) $(NAME_L2) #$(NAME_L1) $(NAME_L3)
 
 $(NAME):	$(OBJ)
 		$(CC) $(OBJ) -o $(NAME) -ldl
@@ -55,7 +55,7 @@ $(NAME_L1):	$(OBJ_L1)
 		$(CC) $(OBJ_L1) -shared -o $(NAME_L1)
 
 $(NAME_L2):	$(OBJ_L2)
-		$(CC) $(OBJ_L2) -shared -o $(NAME_L2)
+		$(CC) $(OBJ_L2) -lsfml-window -shared -o $(NAME_L2)
 
 $(NAME_L3):	$(OBJ_L3)
 		$(CC) $(OBJ_L3) -shared -o $(NAME_L3)

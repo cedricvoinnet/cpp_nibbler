@@ -1,4 +1,6 @@
 #include <dlfcn.h>
+#include "Error.hh"
+#include "IGraphic.hh"
 #include "Core.hh"
 
 Core::Core(int width, int height, void *lib)
@@ -19,10 +21,21 @@ bool	Core::isAlive()
   return (true);
 }
 
-void	Core::gameLoop()
+void		Core::gameLoop()
 {
+  graphCreate	pMaker;
+  IGraphic	*graphicDisp;
+  void		*mkr;
+
+  if (!(mkr = dlsym(_lib, "create")))
+    throw ArgError("Cannot load graphic object");
+  pMaker = (graphCreate)mkr;
+
+  graphicDisp = pMaker(_boardWidth, _boardHeight);
+
   while (isAlive())
     {
-      _snake.goForward();
+      graphicDisp->getEvent();
+      //      _snake.goForward();
     }
 }

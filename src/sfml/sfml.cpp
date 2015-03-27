@@ -5,7 +5,7 @@
 // Login   <verove_j@epitech.net>
 // 
 // Started on  Thu Mar 26 09:31:58 2015 Jordan Verove
-// Last update Fri Mar 27 14:43:34 2015 Jordan Verove
+// Last update Fri Mar 27 16:35:02 2015 Cédric Voinnet
 //
 
 #include <SFML/Window.hpp>
@@ -62,6 +62,17 @@ t_move		Sfml::getEvent()
     }
   return (NONE);
 }
+
+IGraphic *create(int xMax, int yMax)
+{
+  return (new Sfml(xMax, yMax));
+}
+
+void	destroy(IGraphic *toDestroy)
+{
+  delete toDestroy;
+}
+
 /*
 int		main()
 {
