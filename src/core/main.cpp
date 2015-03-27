@@ -10,6 +10,7 @@ Core			*checkArg(char **av)
   int			height;
   void			*lib;
   std::stringstream	ss;
+  std::string		lib_name;
 
   ss << av[1];
   ss >> width;
@@ -20,8 +21,12 @@ Core			*checkArg(char **av)
   ss >> height;
   if (height < 10 || height > 45)
     throw ArgError("Height must be between 10 and 45");
-  if (!(lib = dlopen(av[3], RTLD_LAZY)))
-    throw ArgError("No such library");
+  ss.clear();
+  ss << "./";
+  ss << av[3];
+  ss >> lib_name;
+  if (!(lib = dlopen(lib_name.c_str(), RTLD_LAZY)))
+    throw ArgError("No such file");
   return (new Core(width, height, lib));
 }
 

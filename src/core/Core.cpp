@@ -16,5 +16,7 @@ Core::~Core()
 
 void	Core::gameLoop()
 {
-  
+  _snake.goForward();
+  _snake.goForward();
+  _snake.goForward();
 }
