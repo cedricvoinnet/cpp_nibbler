@@ -36,17 +36,20 @@ bool					Core::isAlive()
 void					Core::spawnFood()
 {
   std::vector<std::pair<int, int> >	snakeBody = _snake.getBody();
-  int					x;
-  int					y;
 
-  x = rand() % _boardWidth;
-  y = rand() % _boardHeight;
-  _food = std::make_pair(x, y);
+  _food = std::make_pair(rand() % _boardWidth, rand() % _boardHeight);
   while (std::find(snakeBody.begin(), snakeBody.end(), _food) != snakeBody.end())
+    _food = std::make_pair(rand() % _boardWidth, rand() % _boardHeight);
+}
+
+void	Core::eatFood()
+{
+  std::vector<std::pair<int, int> >	snakeBody = _snake.getBody();
+
+  if (snakeBody[0] == _food)
     {
-      x = rand() % _boardWidth;
-      y = rand() % _boardHeight;
-      _food = std::make_pair(x, y);
+      //      _snake.grow();
+      spawnFood();
     }
 }
 
@@ -57,23 +60,23 @@ void		Core::gameLoop()
   IGraphic	*graphicDisp;
   t_move	key;
 
-  if (!(gCreate = (graphCreate)dlsym(_lib, "create")))
+  if (!(gCreate = reinterpret_cast<graphCreate>(dlsym(_lib, "create"))))
     throw LoadError("Cannot load graphic object");
-  if (!(gDelete = (graphDelete)dlsym(_lib, "destroy")))
+  if (!(gDelete = reinterpret_cast<graphDelete>(dlsym(_lib, "destroy"))))
     throw LoadError("Cannot load graphic object");
   graphicDisp = gCreate(_boardWidth, _boardHeight);
   while (isAlive())
     {
-      std::cout << _food.first << ", " << _food.second << std::endl;
+      //      std::cout << _food.first << ", " << _food.second << std::endl;
       graphicDisp->display();
-      // eatFood();
+      //      _snake.grow();
+      //      eatFood();
       if ((key = graphicDisp->getEvent()) == QUIT)
 	break;
       if (key != NONE)
       	_snake.chDir(key);
       _snake.goForward();
-      usleep(300000);
-      
+      usleep(200000);
     }
   gDelete(graphicDisp);
 }
