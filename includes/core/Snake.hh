@@ -27,7 +27,7 @@ class					Snake
 public:
   void					goForward();
   void					chDir(t_move const &);
-  void					grow(int, int);
+  void					grow();
 };
 
 #endif	// !SNAKE_HH_

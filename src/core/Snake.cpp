@@ -41,14 +41,11 @@ void			Snake::goForward()
     case WEST:
       _body[0].first -= 1;
       break;
-    default:
-      break;
     }
-  // std::cout << "0: " << _body[0].first << ", " << _body[0].second << std::endl;
-  // std::cout << "1: " << _body[1].first << ", " << _body[1].second << std::endl;
-  // std::cout << "2: " << _body[2].first << ", " << _body[2].second << std::endl;
-  // std::cout << "3: " << _body[3].first << ", " << _body[3].second << std::endl;
-  // std::cout << "--------------------------" << std::endl;
+  int i = 0;
+  for (std::vector<std::pair<int, int> >::iterator it = _body.begin(); it != _body.end(); it++, i++)
+    std::cout << i << ": " << it->first << ", " << it->second << std::endl;
+  std::cout << "--------------------" << std::endl;
 }
 
 void	Snake::chDir(t_move const &turn)
@@ -59,11 +56,17 @@ void	Snake::chDir(t_move const &turn)
     _dir = static_cast<t_direction>((_dir + 1) % 4);
 }
 
-void						Snake::grow(int xMax, int yMax)
+void						Snake::grow()
 {
+  int						beforeLastX;
+  int						beforeLastY;
   std::vector<std::pair<int, int> >::iterator	tail = _body.end() - 2;
 
-  xMax -= 1;
-  yMax -= 1;
-  //  tail;
+  beforeLastX = tail->first;
+  beforeLastY = tail->second;
+  ++tail;
+  if (tail->first - beforeLastX != 0)
+    _body.push_back(std::make_pair(tail->first + (tail->first - beforeLastX), tail->second));
+  else if (tail->second - beforeLastY != 0)
+    _body.push_back(std::make_pair(tail->first, tail->second + (tail->second - beforeLastY)));
 }

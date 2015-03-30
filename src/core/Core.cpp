@@ -10,8 +10,8 @@
 
 Core::Core(int width, int height, void *lib)
   : _snake(Snake(width, height)),
-    _boardWidth(width),
-    _boardHeight(height),
+    _boardWidth(width - 1),
+    _boardHeight(height - 1),
     _lib(lib)
 {
   srand(time(NULL));
@@ -48,7 +48,7 @@ void	Core::eatFood()
 
   if (snakeBody[0] == _food)
     {
-      //      _snake.grow();
+      _snake.grow();
       spawnFood();
     }
 }
@@ -67,10 +67,9 @@ void		Core::gameLoop()
   graphicDisp = gCreate(_boardWidth, _boardHeight);
   while (isAlive())
     {
-      //      std::cout << _food.first << ", " << _food.second << std::endl;
+      std::cout << "food: " << _food.first << ", " << _food.second << std::endl;
       graphicDisp->display();
-      //      _snake.grow();
-      //      eatFood();
+      eatFood();
       if ((key = graphicDisp->getEvent()) == QUIT)
 	break;
       if (key != NONE)
