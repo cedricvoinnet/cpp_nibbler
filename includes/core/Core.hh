@@ -4,20 +4,23 @@
 # include <string>
 # include "Snake.hh"
 
-class	Core
+class			Core
 {
 private:
-  Snake		_snake;
-  unsigned int	_boardWidth;
-  unsigned int	_boardHeight;
-  void		*_lib;
+  Snake			_snake;
+  int			_boardWidth;
+  int			_boardHeight;
+  void			*_lib;
+  std::pair<int, int>	_food;
 public:
   Core(int, int, void *);
   ~Core();
 public:
-  void		gameLoop();
+  void			gameLoop();
 private:
-  bool		isAlive();
+  bool			isAlive();
+  void			spawnFood();
+  void			eatFood();
 };
 
 #endif	// !CORE_HH_

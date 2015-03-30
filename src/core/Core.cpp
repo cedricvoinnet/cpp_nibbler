@@ -1,4 +1,9 @@
+#include <algorithm>
+#include <iostream>
 #include <dlfcn.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <time.h>
 #include "Error.hh"
 #include "IGraphic.hh"
 #include "Core.hh"
@@ -9,6 +14,8 @@ Core::Core(int width, int height, void *lib)
     _boardHeight(height),
     _lib(lib)
 {
+  srand(time(NULL));
+  spawnFood();
 }
 
 Core::~Core()
@@ -16,26 +23,57 @@ Core::~Core()
   dlclose(_lib);
 }
 
-bool	Core::isAlive()
+bool					Core::isAlive()
 {
-  return (true);
+  std::vector<std::pair<int, int> >	snakeBody = _snake.getBody();
+
+  if (std::find(snakeBody.begin() + 1, snakeBody.end(), snakeBody[0]) != snakeBody.end())
+    return (false);
+  return (snakeBody[0].first > 0 && snakeBody[0].first <= _boardWidth &&
+	  snakeBody[0].second > 0 && snakeBody[0].second <= _boardHeight);
+}
+
+void					Core::spawnFood()
+{
+  std::vector<std::pair<int, int> >	snakeBody = _snake.getBody();
+  int					x;
+  int					y;
+
+  x = rand() % _boardWidth;
+  y = rand() % _boardHeight;
+  _food = std::make_pair(x, y);
+  while (std::find(snakeBody.begin(), snakeBody.end(), _food) != snakeBody.end())
+    {
+      x = rand() % _boardWidth;
+      y = rand() % _boardHeight;
+      _food = std::make_pair(x, y);
+    }
 }
 
 void		Core::gameLoop()
 {
-  graphCreate	pMaker;
+  graphCreate	gCreate;
+  graphDelete	gDelete;
   IGraphic	*graphicDisp;
-  void		*mkr;
+  t_move	key;
 
-  if (!(mkr = dlsym(_lib, "create")))
-    throw ArgError("Cannot load graphic object");
-  pMaker = (graphCreate)mkr;
-
-  graphicDisp = pMaker(_boardWidth, _boardHeight);
-
+  if (!(gCreate = (graphCreate)dlsym(_lib, "create")))
+    throw LoadError("Cannot load graphic object");
+  if (!(gDelete = (graphDelete)dlsym(_lib, "destroy")))
+    throw LoadError("Cannot load graphic object");
+  graphicDisp = gCreate(_boardWidth, _boardHeight);
   while (isAlive())
     {
-      graphicDisp->getEvent();
-      //      _snake.goForward();
+      std::cout << _food.first << ", " << _food.second << std::endl;
+      graphicDisp->display();
+      // eatFood();
+      if ((key = graphicDisp->getEvent()) == QUIT)
+	break;
+      if (key != NONE)
+      	_snake.chDir(key);
+      _snake.goForward();
+      usleep(300000);
+      
     }
+  gDelete(graphicDisp);
 }

@@ -24,7 +24,9 @@ class					Snake
  public:
   t_direction				getDirection() const;
   std::vector<std::pair<int, int> >	getBody() const;
+public:
   void					goForward();
+  void					chDir(t_move const &);
 };
 
 #endif	// !SNAKE_HH_
