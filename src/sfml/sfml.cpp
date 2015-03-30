@@ -5,10 +5,11 @@
 // Login   <verove_j@epitech.net>
 // 
 // Started on  Thu Mar 26 09:31:58 2015 Jordan Verove
-// Last update Fri Mar 27 16:35:02 2015 Cédric Voinnet
+// Last update Mon Mar 30 17:42:52 2015 Jordan Verove
 //
 
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
 #include "Sfml.hh"
@@ -24,36 +25,51 @@ Sfml::~Sfml()
   window.Close();
 }
 
-void		Sfml::display()
+void		Sfml::display(std::vector<std::pair<int, int> > snake, std::pair<int, int> food)
 {
-  
+  sf::Sprite	Sprite;
+  sf::Image	Image;
+
+  (void) food;
+  (void) snake;
+  if (!Image.LoadFromFile("snake.png"))
+    {
+      std::cout<< "error on img file" << std::endl;
+    }
+  else
+    Sprite.SetImage(Image);
 }
 
 t_move		Sfml::getEvent()
 {
   sf::Event	event;
-
+  
   if (window.GetEvent(event))
     {
       switch (event.Type)
-        {
+	{
 	case sf::Event::Closed:
-          window.Close();
-          return (QUIT);
+	  window.Close();
+	  while (window.GetEvent(event));
+	  return (QUIT);
 	case sf::Event::KeyPressed:
 	  switch(event.Key.Code)
-            {
+	    {
 	    case sf::Key::Escape:
 	      std::cout << "echape" <<std::endl;
-              window.Close();
+	      window.Close();
+	      while (window.GetEvent(event));
               return (QUIT);
 	    case sf::Key::Left:
 	      std::cout << "Left" << std::endl;
+	      while (window.GetEvent(event));
 	      return (LEFT);
 	    case sf::Key::Right:
 	      std::cout << "Right" <<std::endl;
+	      while (window.GetEvent(event));
 	      return (RIGHT);
 	    default:
+	      while (window.GetEvent(event));
 	      return (NONE);
 	    }
 	default:
