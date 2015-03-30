@@ -5,7 +5,7 @@
 // Login   <verove_j@epitech.net>
 // 
 // Started on  Fri Mar 27 10:58:03 2015 Jordan Verove
-// Last update Fri Mar 27 16:44:09 2015 Cédric Voinnet
+// Last update Mon Mar 30 17:32:39 2015 Jordan Verove
 //
 
 #ifndef SFML_HH_
@@ -27,7 +27,7 @@ public:
   Sfml(int x, int y);
   ~Sfml();
   t_move	getEvent();
-  void		display();
+  void		display(std::vector<std::pair<int, int> > snake, std::pair<int, int> food);
   
 };
 
