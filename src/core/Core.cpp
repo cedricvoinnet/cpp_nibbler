@@ -67,7 +67,6 @@ void		Core::gameLoop()
   graphicDisp = gCreate(_boardWidth, _boardHeight);
   while (isAlive())
     {
-      std::cout << "food: " << _food.first << ", " << _food.second << std::endl;
       graphicDisp->display();
       eatFood();
       if ((key = graphicDisp->getEvent()) == QUIT)

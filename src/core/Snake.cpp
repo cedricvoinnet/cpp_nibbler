@@ -42,10 +42,10 @@ void			Snake::goForward()
       _body[0].first -= 1;
       break;
     }
-  int i = 0;
-  for (std::vector<std::pair<int, int> >::iterator it = _body.begin(); it != _body.end(); it++, i++)
-    std::cout << i << ": " << it->first << ", " << it->second << std::endl;
-  std::cout << "--------------------" << std::endl;
+  // int i = 0;
+  // for (std::vector<std::pair<int, int> >::iterator it = _body.begin(); it != _body.end(); it++, i++)
+  //   std::cout << i << ": " << it->first << ", " << it->second << std::endl;
+  // std::cout << "--------------------" << std::endl;
 }
 
 void	Snake::chDir(t_move const &turn)
