@@ -67,7 +67,7 @@ void		Core::gameLoop()
   graphicDisp = gCreate(_boardWidth, _boardHeight);
   while (isAlive())
     {
-      graphicDisp->display();
+      graphicDisp->display(_snake.getBody(), _food);
       eatFood();
       if ((key = graphicDisp->getEvent()) == QUIT)
 	break;
