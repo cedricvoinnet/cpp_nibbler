@@ -5,7 +5,7 @@
 // Login   <gazzol_j@epitech.net>
 // 
 // Started on  Mon Mar 30 10:27:12 2015 julien gazzola
-// Last update Tue Mar 31 13:39:29 2015 julien gazzola
+// Last update Tue Mar 31 13:43:45 2015 julien gazzola
 //
 
 #include <unistd.h>
@@ -68,12 +68,12 @@ void		Ncurses::display(std::vector<std::pair<int, int> > snake, std::pair<int, i
   wbkgd(this->_nibbler, COLOR_PAIR(1));
   wrefresh(this->_nibbler);
   wattron(this->_nibbler, COLOR_PAIR(3));
-  wattron(this->_nibbler, COLOR_PAIR(2));
   display_food(food);
+  wattroff(this->_nibbler, COLOR_PAIR(3));
+  wattron(this->_nibbler, COLOR_PAIR(2));
   display_snake(snake);
   wrefresh(this->_nibbler);
   wattroff(this->_nibbler, COLOR_PAIR(2));
-  wattroff(this->_nibbler, COLOR_PAIR(3));
   wrefresh(this->_nibbler);
   wattroff(this->_nibbler, COLOR_PAIR(1));
 }
