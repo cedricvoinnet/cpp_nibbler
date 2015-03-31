@@ -29,8 +29,8 @@ bool					Core::isAlive()
 
   if (std::find(snakeBody.begin() + 1, snakeBody.end(), snakeBody[0]) != snakeBody.end())
     return (false);
-  return (snakeBody[0].first > 0 && snakeBody[0].first <= _boardWidth &&
-	  snakeBody[0].second > 0 && snakeBody[0].second <= _boardHeight);
+  return (snakeBody[0].first >= 0 && snakeBody[0].first < _boardWidth &&
+	  snakeBody[0].second >= 0 && snakeBody[0].second < _boardHeight);
 }
 
 void					Core::spawnFood()
@@ -74,7 +74,7 @@ void		Core::gameLoop()
       if (key != NONE)
       	_snake.chDir(key);
       _snake.goForward();
-      usleep(200000);
+      usleep(100000);
     }
   gDelete(graphicDisp);
 }
