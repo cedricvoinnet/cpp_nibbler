@@ -5,7 +5,7 @@
 ## Login   <voinne_c@epitech.net>
 ## 
 ## Started on  Mon Mar 23 10:48:19 2015 Cédric Voinnet
-## Last update Mon Mar 30 11:29:28 2015 julien gazzola
+## Last update Tue Mar 31 08:34:19 2015 Cédric Voinnet
 ##
 
 CC	=	g++
@@ -55,7 +55,7 @@ $(NAME_L1):	$(OBJ_L1)
 		$(CC) $(OBJ_L1) -shared -o $(NAME_L1)
 
 $(NAME_L2):	$(OBJ_L2)
-		$(CC) $(OBJ_L2) -lsfml-window -shared -o $(NAME_L2)
+		$(CC) $(OBJ_L2) -lsfml-window -lsfml-graphics -shared -o $(NAME_L2)
 
 $(NAME_L3):	$(OBJ_L3)
 		$(CC) $(OBJ_L3) -lncurses -shared -o $(NAME_L3)
