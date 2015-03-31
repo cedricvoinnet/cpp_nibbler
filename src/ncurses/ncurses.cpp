@@ -5,7 +5,7 @@
 // Login   <gazzol_j@epitech.net>
 // 
 // Started on  Mon Mar 30 10:27:12 2015 julien gazzola
-// Last update Mon Mar 30 17:46:10 2015 julien gazzola
+// Last update Tue Mar 31 13:39:29 2015 julien gazzola
 //
 
 #include <unistd.h>
@@ -22,7 +22,7 @@ Ncurses::Ncurses(int x, int y):
   keypad(stdscr, 1);
   nodelay(stdscr, 1);
   curs_set(0);
-  this->_nibbler = (newwin(x, y, 0, 0));
+  this->_nibbler = (newwin(y, x, 0, 0));
 }
 
 Ncurses::~Ncurses()
@@ -48,28 +48,32 @@ t_move		Ncurses::getEvent()
 
 void		Ncurses::display_snake(std::vector<std::pair<int, int> > snake)
 {
-  (void) snake;
+  for (std::vector<std::pair<int, int> >::iterator it = snake.begin(); it != snake.end(); it++)
+    mvwprintw(this->_nibbler, it->second, it->first, " ");
 }
 
 void		Ncurses::display_food(std::pair<int, int> food)
 {
-  (void) food;
+  mvwprintw(this->_nibbler, food.second, food.first, " ");
 }
 
 void		Ncurses::display(std::vector<std::pair<int, int> > snake, std::pair<int, int> food)
 {
-  display_snake(snake);
-  display_food(food);
   wclear(this->_nibbler);
   start_color();
   init_pair(1, COLOR_BLACK, COLOR_WHITE);
   init_pair(2, COLOR_GREEN, COLOR_GREEN);
+  init_pair(3, COLOR_RED, COLOR_RED);
   wattron(this->_nibbler, COLOR_PAIR(1));
   wbkgd(this->_nibbler, COLOR_PAIR(1));
   wrefresh(this->_nibbler);
+  wattron(this->_nibbler, COLOR_PAIR(3));
   wattron(this->_nibbler, COLOR_PAIR(2));
-  wprintw(this->_nibbler, " ");
+  display_food(food);
+  display_snake(snake);
+  wrefresh(this->_nibbler);
   wattroff(this->_nibbler, COLOR_PAIR(2));
+  wattroff(this->_nibbler, COLOR_PAIR(3));
   wrefresh(this->_nibbler);
   wattroff(this->_nibbler, COLOR_PAIR(1));
 }
