@@ -5,12 +5,14 @@
 // Login   <verove_j@epitech.net>
 // 
 // Started on  Thu Mar 26 09:31:58 2015 Jordan Verove
-// Last update Tue Mar 31 08:34:43 2015 Cédric Voinnet
+// Last update Tue Mar 31 14:08:37 2015 Jordan Verove
 //
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cstdlib>
+#include <unistd.h>
 
 #include "Sfml.hh"
 
@@ -29,15 +31,48 @@ void		Sfml::display(std::vector<std::pair<int, int> > snake, std::pair<int, int>
 {
   sf::Sprite	Sprite;
   sf::Image	Image;
+  sf::Shape	Background;
+  sf::Shape	perso;
+  int		x_resize;
+  int		y_resize;
+  unsigned int		i = 0;
 
   (void) food;
   (void) snake;
+
+  x_resize = 800 / _x;
+  y_resize = 600 / _y;
+  (void) x_resize;
+  (void) y_resize;
   if (!Image.LoadFromFile("snake.png"))
     {
       std::cout<< "error on img file" << std::endl;
     }
   else
     Sprite.SetImage(Image);
+  Background.AddPoint(0, 0, sf::Color(255, 255, 255));
+  Background.AddPoint(800, 0, sf::Color(255, 255, 255));
+  Background.AddPoint(800, 600, sf::Color(255, 255, 255));
+  Background.AddPoint(0, 800, sf::Color(255, 255, 255));
+  Background.EnableFill(true);
+  window.Clear();
+  window.Draw(Background);
+  Sprite.Scale(x_resize, y_resize);
+  Sprite.SetPosition(800 / (_x / snake[i].first), (600 / (_y / snake[i].second)));
+  window.Draw(Sprite);
+  /*  while (i < snake.size())
+    {
+      Sprite.Scale(x_resize, y_resize);
+      Sprite.SetPosition(800 / (_x / snake[i].first), (600 / (_y / snake[i].second)));
+      window.Draw(Sprite);
+      //      window.Display();
+      i = i + 1;
+      }*/
+  /*  while (i < snake.size())
+    {
+      perso.AddPoint((800 / (_x / snake[i].first)), 
+    }*/
+  window.Display();
 }
 
 t_move		Sfml::getEvent()

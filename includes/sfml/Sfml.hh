@@ -5,7 +5,7 @@
 // Login   <verove_j@epitech.net>
 // 
 // Started on  Fri Mar 27 10:58:03 2015 Jordan Verove
-// Last update Mon Mar 30 17:32:39 2015 Jordan Verove
+// Last update Tue Mar 31 11:33:31 2015 Jordan Verove
 //
 
 #ifndef SFML_HH_
@@ -19,9 +19,9 @@ class	Sfml : public IGraphic
 {
 
 private:
-  int		_x;
-  int		_y;
-  sf::Window	window;
+  int			_x;
+  int			_y;
+  sf::RenderWindow	window;
 
 public:
   Sfml(int x, int y);
