@@ -5,7 +5,7 @@
 ## Login   <voinne_c@epitech.net>
 ## 
 ## Started on  Mon Mar 23 10:48:19 2015 Cédric Voinnet
-## Last update Tue Mar 31 12:25:33 2015 Cédric Voinnet
+## Last update Tue Mar 31 15:21:19 2015 julien gazzola
 ##
 
 CC	=	g++
@@ -36,7 +36,8 @@ SRC_L1	=	src/gtk/Gtk.cpp
 
 SRC_L2	=	src/sfml/sfml.cpp
 
-SRC_L3	=	src/ncurses/ncurses.cpp
+SRC_L3	=	src/ncurses/ncurses.cpp \
+		src/core/Error.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
@@ -48,7 +49,7 @@ OBJ_L3	=	$(SRC_L3:.cpp=.o)
 
 $(OBJ_L1): FLAGS += `pkg-config gtk+-2.0 --cflags --libs`
 
-all:		$(NAME) $(NAME_L2) $(NAME_L3) $(NAME_L1)
+all:		$(NAME) $(NAME_L2) $(NAME_L3) #$(NAME_L1)
 
 $(NAME):	$(OBJ)
 		$(CC) $(OBJ) -o $(NAME) -ldl
