@@ -32,3 +32,8 @@ ArgError::ArgError(std::string const &message, std::string const &name)
   : Error(message, name)
 {
 }
+
+GameError::GameError(std::string const &message, std::string const &name)
+  : Error(message, name)
+{
+}

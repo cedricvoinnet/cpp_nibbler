@@ -5,11 +5,12 @@
 // Login   <gazzol_j@epitech.net>
 // 
 // Started on  Mon Mar 30 10:27:12 2015 julien gazzola
-// Last update Tue Mar 31 13:43:45 2015 julien gazzola
+// Last update Tue Mar 31 17:25:57 2015 julien gazzola
 //
 
-#include <unistd.h>
+#include <iostream>
 #include <ncurses.h>
+#include "Error.hh"
 #include "IGraphic.hh"
 #include "Ncurses.hh"
 
@@ -48,32 +49,53 @@ t_move		Ncurses::getEvent()
 
 void		Ncurses::display_snake(std::vector<std::pair<int, int> > snake)
 {
+  init_pair(2, COLOR_GREEN, COLOR_GREEN);
+  init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
   for (std::vector<std::pair<int, int> >::iterator it = snake.begin(); it != snake.end(); it++)
-    mvwprintw(this->_nibbler, it->second, it->first, " ");
+    if (it == snake.begin())
+      {
+	wattron(this->_nibbler, COLOR_PAIR(4));
+	mvwprintw(this->_nibbler, it->second, it->first, " ");	
+	wrefresh(this->_nibbler);
+	wattroff(this->_nibbler, COLOR_PAIR(4));
+      }
+    else
+      {
+	wattron(this->_nibbler, COLOR_PAIR(2));
+	mvwprintw(this->_nibbler, it->second, it->first, " ");
+	wattroff(this->_nibbler, COLOR_PAIR(2));
+	wrefresh(this->_nibbler);
+      }
 }
 
 void		Ncurses::display_food(std::pair<int, int> food)
 {
+  init_pair(3, COLOR_RED, COLOR_RED);
+  wattron(this->_nibbler, COLOR_PAIR(3));
   mvwprintw(this->_nibbler, food.second, food.first, " ");
+  wattroff(this->_nibbler, COLOR_PAIR(3));
 }
 
 void		Ncurses::display(std::vector<std::pair<int, int> > snake, std::pair<int, int> food)
 {
+  int		maxX = 0;
+  int		maxY = 0;
+
   wclear(this->_nibbler);
   start_color();
-  init_pair(1, COLOR_BLACK, COLOR_WHITE);
-  init_pair(2, COLOR_GREEN, COLOR_GREEN);
-  init_pair(3, COLOR_RED, COLOR_RED);
+  getmaxyx(stdscr, maxY, maxX);
+  if (this->_x > maxX || this->_y > maxY)
+    {
+      delwin(this->_nibbler);
+      endwin();      
+      throw GameError("Term was too small");    
+    }
+  init_pair(1, COLOR_WHITE, COLOR_WHITE);
   wattron(this->_nibbler, COLOR_PAIR(1));
   wbkgd(this->_nibbler, COLOR_PAIR(1));
   wrefresh(this->_nibbler);
-  wattron(this->_nibbler, COLOR_PAIR(3));
   display_food(food);
-  wattroff(this->_nibbler, COLOR_PAIR(3));
-  wattron(this->_nibbler, COLOR_PAIR(2));
   display_snake(snake);
-  wrefresh(this->_nibbler);
-  wattroff(this->_nibbler, COLOR_PAIR(2));
   wrefresh(this->_nibbler);
   wattroff(this->_nibbler, COLOR_PAIR(1));
 }

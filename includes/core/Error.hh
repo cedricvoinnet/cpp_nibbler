@@ -27,4 +27,9 @@ public:
   ArgError(std::string const &message, std::string const &name = "ArgError");
 };
 
+class	GameError : public Error
+{
+public:
+  GameError(std::string const &message, std::string const &name = "GameError");
+};
 #endif // !ERROR_HH_
