@@ -5,13 +5,15 @@
 // Login   <gazzol_j@epitech.net>
 // 
 // Started on  Mon Mar 30 10:33:22 2015 julien gazzola
-// Last update Mon Mar 30 17:45:25 2015 julien gazzola
+// Last update Wed Apr  1 14:43:10 2015 julien gazzola
 //
 
 #ifndef NCURSES_HH_
 # define NCURSES_HH_
 
 # include <vector>
+# include <utility>
+# include "IGraphic"
 
 class	Ncurses : public IGraphic
 {
