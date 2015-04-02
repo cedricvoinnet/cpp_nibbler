@@ -5,7 +5,7 @@
 ## Login   <voinne_c@epitech.net>
 ## 
 ## Started on  Mon Mar 23 10:48:19 2015 Cédric Voinnet
-## Last update Tue Mar 31 15:21:19 2015 julien gazzola
+## Last update Thu Apr  2 19:06:29 2015 Cédric Voinnet
 ##
 
 CC	=	g++
@@ -14,14 +14,11 @@ RM	=	rm -f
 
 FLAGS	=	-fpic -W -Wall -Werror -Wextra
 
-INC	=	-Iincludes/core/ \
-		-Iincludes/gtk/ \
-		-Iincludes/sfml/ \
-		-Iincludes/ncurses/
+INC	=	-Iincludes/core/
 
 NAME	=	nibbler
 
-NAME_L1	=	lib_nibbler_gtk.so
+NAME_L1	=	lib_nibbler_xlib.so
 
 NAME_L2	=	lib_nibbler_sfml.so
 
@@ -32,7 +29,8 @@ SRC	=	src/core/main.cpp \
 		src/core/Snake.cpp \
 		src/core/Error.cpp
 
-SRC_L1	=	src/gtk/Gtk.cpp
+SRC_L1	=	src/xlib/Xlib.cpp \
+		src/core/Error.cpp
 
 SRC_L2	=	src/sfml/sfml.cpp
 
@@ -47,15 +45,13 @@ OBJ_L2	=	$(SRC_L2:.cpp=.o)
 
 OBJ_L3	=	$(SRC_L3:.cpp=.o)
 
-$(OBJ_L1): FLAGS += `pkg-config gtk+-2.0 --cflags --libs`
-
-all:		$(NAME) $(NAME_L2) $(NAME_L3) #$(NAME_L1)
+all:		$(NAME) $(NAME_L1) $(NAME_L2) $(NAME_L3)
 
 $(NAME):	$(OBJ)
 		$(CC) $(OBJ) -o $(NAME) -ldl
 
 $(NAME_L1):	$(OBJ_L1)
-		$(CC) $(OBJ_L1) `pkg-config gtk+-2.0 --cflags --libs` -shared -o $(NAME_L1)
+		$(CC) $(OBJ_L1) -lX11 -shared -o $(NAME_L1)
 
 $(NAME_L2):	$(OBJ_L2)
 		$(CC) $(OBJ_L2) -lsfml-window -lsfml-graphics -shared -o $(NAME_L2)
@@ -65,6 +61,12 @@ $(NAME_L3):	$(OBJ_L3)
 
 %.o:		%.cpp
 		$(CC) $(FLAGS) $(INC) -o $@ -c $<
+
+$(OBJ_L1): 	INC += -Iincludes/xlib/
+
+$(OBJ_L2): 	INC += -Iincludes/sfml/
+
+$(OBJ_L3): 	INC += -Iincludes/ncurses/
 
 clean:
 		$(RM) $(OBJ) $(OBJ_L1) $(OBJ_L2) $(OBJ_L3)
