@@ -104,9 +104,15 @@ void			Xlib::printSnake(std::vector<std::pair<int, int> > snake) const
       XFillRectangle(_display, _window, _gc, xBegin + _squareSize * it->first,
 		     yBegin + _squareSize * it->second, _squareSize,
 		     _squareSize);
+      XSetForeground(_display, _gc, _brown.pixel);
+      XDrawRectangle(_display, _window, _gc, xBegin + _squareSize * it->first,
+		     yBegin + _squareSize * it->second, _squareSize,
+		     _squareSize);
     }
   XSetForeground(_display, _gc, BlackPixel(_display, DefaultScreen(_display)));
   XFillRectangle(_display, _window, _gc, xBegin + _squareSize * last.first,
+		 yBegin + _squareSize * last.second, _squareSize, _squareSize);
+  XDrawRectangle(_display, _window, _gc, xBegin + _squareSize * last.first,
 		 yBegin + _squareSize * last.second, _squareSize, _squareSize);
   --it;
   last = std::make_pair(it->first, it->second);
