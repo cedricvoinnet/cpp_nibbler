@@ -1,3 +1,4 @@
+#include <iostream>
 #include <X11/keysym.h>
 #include "Xlib.hh"
 #include "Error.hh"
@@ -40,6 +41,7 @@ void		Xlib::initXlib()
     throw GameError("XAllocNamedColor - failed to allocated 'brown' color.");
   if (!XAllocNamedColor(_display, colormap, "green", &_green, &_green))
     throw GameError("XAllocNamedColor - failed to allocated 'green' color.");
+  printBackground();
 }
 
 t_move			Xlib::getEvent()
@@ -48,6 +50,10 @@ t_move			Xlib::getEvent()
   KeySym		escape;
   KeySym		left;
   KeySym		right;
+  Atom			wm_delete_window;
+
+  wm_delete_window = XInternAtom(_display, "WM_DELETE_WINDOW", False);
+  XSetWMProtocols(_display, _window, &wm_delete_window, 1);
 
   escape = XKeysymToKeycode(_display, XK_Escape);
   left = XKeysymToKeycode(_display, XK_Left);
@@ -65,6 +71,23 @@ t_move			Xlib::getEvent()
 	    return (RIGHT);
 	  while (XPending(_display))
 	    XNextEvent(_display, &ev);
+	}
+      else if (ev.type == ConfigureNotify)
+	{
+	  XConfigureEvent xce = ev.xconfigure;
+	  if (xce.width != _windowX ||
+	      xce.height != _windowY)
+	    {
+	      _windowX = xce.width;
+	      _windowY = xce.height;
+	      _squareSize = (_windowX/_gameX > _windowY/_gameY) ? _windowY/_gameY : _windowX/_gameX;
+	      XClearWindow (_display, _window);
+	    }
+	  else if (ev.type == ClientMessage)
+	    {
+	      if ((Atom)ev.xclient.data.l[0] == wm_delete_window)
+		return (QUIT);
+	    }
 	}
     }
   return (NONE);
@@ -95,6 +118,11 @@ void			Xlib::printSnake(std::vector<std::pair<int, int> > snake) const
   static std::pair<int, int>			last = std::make_pair(0,0);
   std::vector<std::pair<int, int> >::iterator	it = snake.begin();
 
+  XSetForeground(_display, _gc, BlackPixel(_display, DefaultScreen(_display)));
+  XFillRectangle(_display, _window, _gc, xBegin + _squareSize * last.first,
+		 yBegin + _squareSize * last.second, _squareSize, _squareSize);
+  XDrawRectangle(_display, _window, _gc, xBegin + _squareSize * last.first,
+		 yBegin + _squareSize * last.second, _squareSize, _squareSize);
   for (;it != snake.end(); ++it)
     {
       if (it == snake.begin())

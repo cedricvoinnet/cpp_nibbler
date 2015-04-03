@@ -12,6 +12,8 @@ private:
   int			_boardHeight;
   void			*_lib;
   std::pair<int, int>	_food;
+  int			_score;
+  int			_speed;
 public:
   Core(int, int, void *);
   ~Core();

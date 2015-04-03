@@ -16,6 +16,8 @@ Core::Core(int width, int height, void *lib)
 {
   srand(time(NULL));
   spawnFood();
+  _score = 0;
+  _speed = 200000;
 }
 
 Core::~Core()
@@ -50,6 +52,10 @@ void	Core::eatFood()
     {
       _snake.grow();
       spawnFood();
+      _score += 1;
+      if (!_score % 10)
+	if (_speed > 50000)
+	  _speed -= 50000;
     }
 }
 
@@ -74,7 +80,8 @@ void		Core::gameLoop()
       if (key != NONE)
       	_snake.chDir(key);
       _snake.goForward();
-      usleep(100000);
+      usleep(_speed);
     }
   gDelete(graphicDisp);
+  std::cout << "You scored: " << _score << "points" << std::endl;
 }

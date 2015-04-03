@@ -5,10 +5,10 @@
 ## Login   <voinne_c@epitech.net>
 ## 
 ## Started on  Mon Mar 23 10:48:19 2015 Cédric Voinnet
-## Last update Thu Apr  2 19:06:29 2015 Cédric Voinnet
+## Last update Fri Apr  3 12:08:12 2015 Cédric Voinnet
 ##
 
-CC	=	g++
+CC	=	g++ -g3
 
 RM	=	rm -f
 
