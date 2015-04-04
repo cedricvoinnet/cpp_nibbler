@@ -53,9 +53,8 @@ void	Core::eatFood()
       _snake.grow();
       spawnFood();
       _score += 1;
-      if (!_score % 10)
-	if (_speed > 50000)
-	  _speed -= 50000;
+      if (_speed > 50000)
+	_speed -= 10000;
     }
 }
 
@@ -78,10 +77,10 @@ void		Core::gameLoop()
       if ((key = graphicDisp->getEvent()) == QUIT)
 	break;
       if (key != NONE)
-      	_snake.chDir(key);
+	_snake.chDir(key);
       _snake.goForward();
       usleep(_speed);
     }
   gDelete(graphicDisp);
-  std::cout << "You scored: " << _score << "points" << std::endl;
+  std::cout << "You scored: " << _score << " points" << std::endl;
 }

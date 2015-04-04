@@ -14,13 +14,13 @@ Core			*checkArg(char **av)
 
   ss << av[1];
   ss >> width;
-  if (width < 10 || width > 30)
-    throw ArgError("Width must be between 10 and 30");
+  if (width < 20 || width > 160)
+    throw ArgError("Width must be between 20 and 160");
   ss.clear();
   ss << av[2];
   ss >> height;
-  if (height < 10 || height > 45)
-    throw ArgError("Height must be between 10 and 45");
+  if (height < 20 || height > 45)
+    throw ArgError("Height must be between 20 and 45");
   ss.clear();
   ss << "./";
   ss << av[3];
