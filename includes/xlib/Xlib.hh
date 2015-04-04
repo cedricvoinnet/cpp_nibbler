@@ -18,6 +18,7 @@ private:
   Display	*_display;
   Window	_window;
   GC		_gc;
+  Colormap	_colormap;
   XColor	_yellow;
   XColor	_brown;
   XColor        _green;

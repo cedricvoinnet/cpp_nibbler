@@ -15,13 +15,12 @@ Xlib::Xlib(int x, int y, int windowX, int windowY)
 
 Xlib::~Xlib()
 {
+  XFreeColormap(_display, _colormap);
   XCloseDisplay(_display);
 }
 
 void		Xlib::initXlib()
 {
-  Colormap	colormap;
-
   if (!(_display = XOpenDisplay(NULL)))
     throw GameError("Cannot open display");
   int blackColor = BlackPixel(_display, DefaultScreen(_display));
@@ -34,12 +33,12 @@ void		Xlib::initXlib()
 	       StructureNotifyMask);
   XMapWindow(_display, _window);
   _gc = XCreateGC(_display, _window, 0, NULL);
-  colormap = DefaultColormap(_display, DefaultScreen(_display));
-  if (!XAllocNamedColor(_display, colormap, "yellow", &_yellow, &_yellow))
+  _colormap = DefaultColormap(_display, DefaultScreen(_display));
+  if (!XAllocNamedColor(_display, _colormap, "yellow", &_yellow, &_yellow))
     throw GameError("XAllocNamedColor - failed to allocated 'yellow' color.");
-  if (!XAllocNamedColor(_display, colormap, "brown", &_brown, &_brown))
+  if (!XAllocNamedColor(_display, _colormap, "brown", &_brown, &_brown))
     throw GameError("XAllocNamedColor - failed to allocated 'brown' color.");
-  if (!XAllocNamedColor(_display, colormap, "green", &_green, &_green))
+  if (!XAllocNamedColor(_display, _colormap, "green", &_green, &_green))
     throw GameError("XAllocNamedColor - failed to allocated 'green' color.");
   printBackground();
 }
